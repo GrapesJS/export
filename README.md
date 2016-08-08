@@ -49,7 +49,11 @@ Demo: http://grapesjs.com/demo.html
 </script>
 ```
 
+## Limitations
+
+Doesn't export images
+
+
 ## License
 
 BSD 3-Clause
-

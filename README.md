@@ -26,7 +26,7 @@ Demo: http://grapesjs.com/demo.html
 
 ## Usage
 
-```js
+```html
 <link rel="stylesheet" href="path/to/grapes.min.css">
 <script src="path/to/grapes.min.js"></script>
 <script src="path/to/grapesjs-plugin-export.min.js"></script>

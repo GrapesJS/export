@@ -42,7 +42,7 @@ grapesjs.plugins.add('gjs-plugin-export', (editor, opts) => {
   // Add button inside export dialog
   if(c.addExportBtn){
     editor.on('run:export-template', () => {
-      editor.Dialog.getContentEl().appendChild(btnExp);
+      editor.Modal.getContentEl().appendChild(btnExp);
       btnExp.onclick = () => {
         editor.runCommand(commandName);
       };

@@ -3,26 +3,30 @@
 This plugin adds the possibility to export template in a zip archive.
 Demo: http://grapesjs.com/demo.html
 
-## Resume
 
-* Add
-  * Commands
-      - `gjs-export-zip`
-* Plugin
-  * Name: `gjs-plugin-export`
-  * Plugin options
-      - addExportBtn: Add a button inside the export dialog
-        default: `true`
-      - btnLabel: Label to the export butten
-        default: `Export to ZIP`
-      - preHtml: String before the HTML template
-        default: `<!doctype html><html><head><link rel="stylesheet" href="./css/style.css"></head><body>`
-      - postHtml: String after the HTML template
-        default: `</body><html>`
-      - preCss: String before the CSS template
-        default: ``
-      - postCss: String after the CSS template
-        default: ``
+
+## Summary
+
+* Plugin name: `gjs-plugin-export`
+* Commands: `gjs-export-zip`
+
+
+
+## Options
+* `addExportBtn` Add a button inside the export dialog, default: `true`
+* `btnLabel` Label to the export butten, default: `Export to ZIP`
+* `preHtml` String before the HTML template, default: `<!doctype html><html><head><link rel="stylesheet" href="./css/style.css"></head><body>`
+* `postHtml` String after the HTML template, default: `</body><html>`
+* `preCss` String before the CSS template, default: ``
+* `postCss` String after the CSS template, default: ``
+
+
+
+## Download
+
+* `npm i grapesjs-plugin-export`
+
+
 
 ## Usage
 
@@ -52,6 +56,36 @@ Demo: http://grapesjs.com/demo.html
 ## Limitations
 
 Doesn't export images
+
+
+
+## Development
+
+Clone the repository
+
+```sh
+$ git clone https://github.com/artf/grapesjs-plugin-export.git
+$ cd grapesjs-plugin-export
+```
+
+Install it
+
+```sh
+$ npm i
+```
+
+The plugin relies on GrapesJS via `peerDependencies` so you have to install it manually (without adding it to package.json)
+
+```sh
+$ npm i grapesjs --no-save
+```
+
+Start the dev server
+
+```sh
+$ npm start
+```
+
 
 
 ## License

@@ -1,4 +1,7 @@
-grapesjs.plugins.add('gjs-plugin-export', (editor, opts) => {
+import grapesjs from 'grapesjs';
+import JSZip from 'jszip';
+
+export default grapesjs.plugins.add('gjs-plugin-export', (editor, opts) => {
   let c = opts || {};
   let JSZip = require('JSZip');
   let FileSaver = require('file-saver');
@@ -40,7 +43,7 @@ grapesjs.plugins.add('gjs-plugin-export', (editor, opts) => {
   });
 
   // Add button inside export dialog
-  if(c.addExportBtn){
+  if (c.addExportBtn) {
     editor.on('run:export-template', () => {
       editor.Modal.getContentEl().appendChild(btnExp);
       btnExp.onclick = () => {

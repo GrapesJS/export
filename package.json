@@ -1,14 +1,17 @@
 {
   "name": "grapesjs-plugin-export",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Export GrapesJS templates to ZIP",
-  "main": "index.js",
+  "main": "dist/grapesjs-plugin-export.min.js",
   "scripts": {
     "lint": "eslint src",
-    "test": "mocha --compilers js:babel-core/register --recursive ./test/*.js",
-    "test:dev": "mocha --compilers js:babel-core/register --recursive -R min -w ./test/*.js",
-    "build": "WEBPACK_ENV=prod && webpack",
-    "start": "WEBPACK_ENV=dev ./node_modules/.bin/webpack-dev-server --progress --colors"
+    "build": "npm run v:patch && webpack --env.production",
+    "v:patch": "npm version --no-git-tag-version patch",
+    "start": "webpack-dev-server --open --progress --colors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artf/grapesjs-plugin-export.git"
   },
   "keywords": [
     "grapesjs",
@@ -18,20 +21,29 @@
   ],
   "author": "Artur Arseniev",
   "license": "BSD-3-Clause",
-  "devDependencies": {
-    "babel-cli": "^6.11.4",
-    "babel-core": "^6.13.2",
-    "babel-eslint": "^6.1.2",
-    "babel-loader": "^6.2.4",
-    "babel-preset-es2015": "^6.13.2",
-    "eslint": "^3.2.2",
-    "grapesjs": "^0.3.2",
-    "mocha": "^3.0.2",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+  "babel": {
+    "presets": [
+      "env"
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
+  },
+  "peerDependencies": {
+    "grapesjs": "0.x"
   },
   "dependencies": {
     "file-saver": "^1.3.2",
     "jszip": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "html-webpack-plugin": "^2.30.1",
+    "eslint": "^4.1.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4"
   }
 }

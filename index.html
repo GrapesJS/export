@@ -11,11 +11,17 @@
     body, html{ height: 100%; margin: 0;}
   </style>
   <body>
-    <div id="gjs" style="height:0px; overflow:hidden"></div>
+    <div id="gjs" style="height:0px; overflow:hidden">
+      <div class="red">Test content</div>
+      <style>.red {color: red}</style>
+    </div>
     <script type="text/javascript">
       var editor = grapesjs.init({
         noticeOnUnload: 0,
         container : '#gjs',
+        height: '100%',
+        fromElement: 1,
+        storageManager: { autoload: 0 },
         plugins: ['gjs-plugin-export']
       });
     </script>

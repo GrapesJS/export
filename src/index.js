@@ -1,10 +1,9 @@
 import grapesjs from 'grapesjs';
 import JSZip from 'jszip';
+import FileSaver from 'file-saver';
 
 export default grapesjs.plugins.add('gjs-plugin-export', (editor, opts) => {
   let c = opts || {};
-  let JSZip = require('JSZip');
-  let FileSaver = require('file-saver');
   let config = editor.getConfig();
   let pfx = config.stylePrefix;
   let btnExp = document.createElement("BUTTON");

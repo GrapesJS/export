@@ -37,18 +37,18 @@ export default (editor, opts = {}) => {
       zip.file(name, content);
     },
 
-    createDirectory(zip, root) {
+    async createDirectory(zip, root) {
       for (const name in root) {
         if (root.hasOwnProperty(name)) {
           let content = root[name];
-          content = typeof content === 'function' ? content(editor) : content;
+          content = typeof content === 'function' ? await content(editor) : content;
           const typeOf = typeof content;
 
           if (typeOf === 'string') {
             this.createFile(zip, name, content);
           } else if (typeOf === 'object') {
             const dirRoot = zip.folder(name);
-            this.createDirectory(dirRoot, content);
+            await this.createDirectory(dirRoot, content);
           }
         }
       }
@@ -56,13 +56,14 @@ export default (editor, opts = {}) => {
 
     run(editor) {
       const zip = new JSZip();
-      this.createDirectory(zip, config.root);
-      zip.generateAsync({ type: 'blob' })
-      .then(content => {
-        const filenameFn = config.filename;
-        let filename = filenameFn ?
-          filenameFn(editor) : `${config.filenamePfx}_${Date.now()}.zip`;
-        FileSaver.saveAs(content, filename);
+      this.createDirectory(zip, config.root).then(() => {
+        zip.generateAsync({ type: 'blob' })
+        .then(content => {
+          const filenameFn = config.filename;
+          let filename = filenameFn ?
+            filenameFn(editor) : `${config.filenamePfx}_${Date.now()}.zip`;
+          FileSaver.saveAs(content, filename);
+        });
       });
     }
   });

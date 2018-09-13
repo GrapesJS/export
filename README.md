@@ -19,10 +19,6 @@ Demo: http://grapesjs.com/demo.html
 |-|-|-
 | `addExportBtn` | Add a button inside the export dialog | `true` |
 | `btnLabel` | Label to the export button | `Export to ZIP` |
-| `preHtml` | String before the HTML template | `<!doctype html><html><head><link rel="stylesheet" href="./css/style.css"></head><body>` |
-| `postHtml` | String after the HTML template | `</body><html>` |
-| `preCss` | String before the CSS template | `''` |
-| `postCss` | String after the CSS template | `''` |
 | `filenamePfx` | ZIP filename prefix | `grapesjs_template` |
 | `filename` | Use a function to generate the filename, eg. `filename: editor => 'my-file.zip',` | `null` |
 | `root` | Use the root object to create the folder structure of your zip, eg. `

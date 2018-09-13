@@ -21,7 +21,7 @@ Demo: http://grapesjs.com/demo.html
 | `btnLabel` | Label to the export button | `Export to ZIP` |
 | `filenamePfx` | ZIP filename prefix | `grapesjs_template` |
 | `filename` | Use a function to generate the filename, eg. `filename: editor => 'my-file.zip',` | `null` |
-| `root` | Use the root object to create the folder structure of your zip, eg. `
+| `root` | Use the root object to create the folder structure of your zip (async functions are supported), eg. `
     {
       css: {
         'style.css': ed => ed.getCss(),

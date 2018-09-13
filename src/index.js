@@ -9,12 +9,22 @@ export default (editor, opts = {}) => {
   let config = {
     addExportBtn: 1,
     btnLabel: 'Export to ZIP',
-    preHtml: '<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="./css/style.css"></head><body>',
-    postHtml: '</body><html>',
-    preCss: '',
-    postCss: '',
     filenamePfx: 'grapesjs_template',
     filename: null,
+    root: {
+      css: {
+        'style.css': ed => ed.getCss(),
+      },
+      'index.html': ed =>
+        `<!doctype html>
+        <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <link rel="stylesheet" href="./css/style.css">
+          </head>
+          <body>${ed.getHtml()}</body>
+        <html>`,
+    },
     ...opts,
   };
 
@@ -23,13 +33,32 @@ export default (editor, opts = {}) => {
 
   // Add command
   editor.Commands.add(commandName, {
+    createFile(zip, name, content) {
+      zip.file(name, content);
+    },
+
+    createDirectory(zip, root) {
+      for (const name in root) {
+        if (root.hasOwnProperty(name)) {
+          let content = root[name];
+          content = typeof content === 'function' ? content(editor) : content;
+          const typeOf = typeof content;
+
+          if (typeOf === 'string') {
+            this.createFile(zip, name, content);
+          } else if (typeOf === 'object') {
+            const dirRoot = zip.folder(name);
+            this.createDirectory(dirRoot, content);
+          }
+        }
+      }
+    },
+
     run(editor) {
       const zip = new JSZip();
-      const cssDir = zip.folder('css');
-      zip.file('index.html', config.preHtml + editor.getHtml() + config.postHtml);
-      cssDir.file('style.css', config.preCss + editor.getCss() + config.postCss);
-      zip.generateAsync({type:"blob"})
-      .then((content) => {
+      this.createDirectory(zip, config.root);
+      zip.generateAsync({ type: 'blob' })
+      .then(content => {
         const filenameFn = config.filename;
         let filename = filenameFn ?
           filenameFn(editor) : `${config.filenamePfx}_${Date.now()}.zip`;

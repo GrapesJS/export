@@ -25,6 +25,16 @@ Demo: http://grapesjs.com/demo.html
 | `postCss` | String after the CSS template | `''` |
 | `filenamePfx` | ZIP filename prefix | `grapesjs_template` |
 | `filename` | Use a function to generate the filename, eg. `filename: editor => 'my-file.zip',` | `null` |
+| `root` | Use the root object to create the folder structure of your zip, eg. `
+    {
+      css: {
+        'style.css': ed => ed.getCss(),
+        'some-file.txt': 'My custom content',
+      },
+      'index.html': ed => `<body>${ed.getHtml()}</body>`
+    }
+  `
+  | `{ ...check the source }` |
 
 
 

@@ -1,6 +1,6 @@
 {
   "name": "grapesjs-plugin-export",
-  "version": "0.1.5",
+  "version": "1.0.3",
   "description": "Export GrapesJS templates to ZIP",
   "main": "dist/grapesjs-plugin-export.min.js",
   "scripts": {
@@ -29,21 +29,19 @@
       "transform-object-rest-spread"
     ]
   },
-  "peerDependencies": {
-    "grapesjs": "0.x"
-  },
   "dependencies": {
-    "file-saver": "^1.3.2",
+    "file-saver": "^1.3.8",
     "jszip": "^3.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "html-webpack-plugin": "^2.30.1",
-    "eslint": "^4.1.1",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.4"
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^5.5.0",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.18.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.8"
   }
 }

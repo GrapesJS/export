@@ -1,8 +1,7 @@
-import grapesjs from 'grapesjs';
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 
-export default grapesjs.plugins.add('gjs-plugin-export', (editor, opts) => {
+export default (editor, opts = {}) => {
   let c = opts || {};
   let config = editor.getConfig();
   let pfx = config.stylePrefix;
@@ -50,5 +49,4 @@ export default grapesjs.plugins.add('gjs-plugin-export', (editor, opts) => {
       };
     });
   }
-
-});
+};

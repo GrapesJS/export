@@ -24,6 +24,7 @@ Demo: http://grapesjs.com/demo.html
 | `preCss` | String before the CSS template | `''` |
 | `postCss` | String after the CSS template | `''` |
 | `filenamePfx` | ZIP filename prefix | `grapesjs_template` |
+| `filename` | Use a function to generate the filename, eg. `filename: editor => 'my-file.zip',` | `null` |
 
 
 

@@ -14,6 +14,7 @@ export default (editor, opts = {}) => {
     preCss: '',
     postCss: '',
     filenamePfx: 'grapesjs_template',
+    filename: null,
     ...opts,
   };
 
@@ -22,15 +23,17 @@ export default (editor, opts = {}) => {
 
   // Add command
   editor.Commands.add(commandName, {
-    run() {
+    run(editor) {
       const zip = new JSZip();
       const cssDir = zip.folder('css');
-      let fn = `${config.filenamePfx}_${Date.now()}.zip`;
       zip.file('index.html', config.preHtml + editor.getHtml() + config.postHtml);
       cssDir.file('style.css', config.preCss + editor.getCss() + config.postCss);
       zip.generateAsync({type:"blob"})
       .then((content) => {
-          FileSaver.saveAs(content, fn);
+        const filenameFn = config.filename;
+        let filename = filenameFn ?
+          filenameFn(editor) : `${config.filenamePfx}_${Date.now()}.zip`;
+        FileSaver.saveAs(content, filename);
       });
     }
   });

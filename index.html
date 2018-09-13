@@ -22,7 +22,11 @@
         height: '100%',
         fromElement: 1,
         storageManager: { autoload: 0 },
-        plugins: ['grapesjs-plugin-export']
+        plugins: ['grapesjs-plugin-export'],
+        pluginsOpts: {
+          'grapesjs-plugin-export': {
+          }
+        }
       });
     </script>
   </body>

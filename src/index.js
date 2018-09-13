@@ -2,37 +2,32 @@ import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 
 export default (editor, opts = {}) => {
-  let c = opts || {};
-  let config = editor.getConfig();
-  let pfx = config.stylePrefix;
-  let btnExp = document.createElement("BUTTON");
+  let pfx = editor.getConfig('stylePrefix');
+  let btnExp = document.createElement('button');
   let commandName = 'gjs-export-zip';
 
-  let defaults = {
+  let config = {
     addExportBtn: 1,
     btnLabel: 'Export to ZIP',
     preHtml: '<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="./css/style.css"></head><body>',
     postHtml: '</body><html>',
     preCss: '',
-    postCss: ''
+    postCss: '',
+    filenamePfx: 'grapesjs_template',
+    ...opts,
   };
 
-  for (let name in defaults) {
-    if (!(name in c))
-      c[name] = defaults[name];
-  }
-
-  btnExp.innerHTML = c.btnLabel;
-  btnExp.className = pfx + 'btn-prim';
+  btnExp.innerHTML = config.btnLabel;
+  btnExp.className = `${pfx}btn-prim`;
 
   // Add command
   editor.Commands.add(commandName, {
     run() {
-      let zip = new JSZip();
-      let cssDir = zip.folder("css");
-      let fn = 'grapesjs_template_' + Date.now() + '.zip';
-      zip.file('index.html', c.preHtml + editor.getHtml() + c.postHtml);
-      cssDir.file('style.css', c.preCss + editor.getCss() + c.postCss);
+      const zip = new JSZip();
+      const cssDir = zip.folder('css');
+      let fn = `${config.filenamePfx}_${Date.now()}.zip`;
+      zip.file('index.html', config.preHtml + editor.getHtml() + config.postHtml);
+      cssDir.file('style.css', config.preCss + editor.getCss() + config.postCss);
       zip.generateAsync({type:"blob"})
       .then((content) => {
           FileSaver.saveAs(content, fn);
@@ -41,7 +36,7 @@ export default (editor, opts = {}) => {
   });
 
   // Add button inside export dialog
-  if (c.addExportBtn) {
+  if (config.addExportBtn) {
     editor.on('run:export-template', () => {
       editor.Modal.getContentEl().appendChild(btnExp);
       btnExp.onclick = () => {

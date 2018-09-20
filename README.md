@@ -27,6 +27,12 @@ Demo: http://grapesjs.com/demo.html
         'style.css': ed => ed.getCss(),
         'some-file.txt': 'My custom content',
       },
+      img: async ed => {
+        const images = await fetchImagesByStructue(ed.getComponents());
+        return images;
+        // Where `images` is an object like this:
+        // { 'img1.png': '...png content', 'img2.jpg': '...jpg content' }
+      },
       'index.html': ed => `<body>${ed.getHtml()}</body>`
     }
   `

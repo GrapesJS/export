@@ -103,14 +103,6 @@ const editor = grapesjs.init({
 
 
 
-## Limitations
-
-Doesn't export images
-
-
-
-
-
 ## Development
 
 Clone the repository

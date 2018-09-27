@@ -38,6 +38,8 @@ export default (editor, opts = {}) => {
     },
 
     async createDirectory(zip, root) {
+      root = typeof root === 'function' ? await root(editor) : root;
+
       for (const name in root) {
         if (root.hasOwnProperty(name)) {
           let content = root[name];

@@ -25,6 +25,7 @@ export default (editor, opts = {}) => {
           <body>${ed.getHtml()}</body>
         <html>`,
     },
+    isBinary: null,
     ...opts,
   };
 
@@ -34,7 +35,21 @@ export default (editor, opts = {}) => {
   // Add command
   editor.Commands.add(commandName, {
     createFile(zip, name, content) {
-      zip.file(name, content);
+      const opts = {};
+      const ext = name.split('.')[1];
+      const isBinary = config.isBinary ?
+        config.isBinary(content, name) :
+        !(ext && ['html', 'css'].indexOf(ext) >= 0) &&
+        !/^[\x00-\x7F]*$/.test(content);
+
+      if (isBinary) {
+        opts.binary = true;
+      }
+
+      editor.log(['Create file', { name, content, opts }],
+        { ns: 'plugin-export' });
+
+      zip.file(name, content, opts);
     },
 
     async createDirectory(zip, root) {

@@ -11,6 +11,8 @@ export default (editor, opts = {}) => {
     btnLabel: 'Export to ZIP',
     filenamePfx: 'grapesjs_template',
     filename: null,
+    done: () => {},
+    onError: console.error,
     root: {
       css: {
         'style.css': ed => ed.getCss(),
@@ -71,17 +73,20 @@ export default (editor, opts = {}) => {
       }
     },
 
-    run(editor) {
+    run(editor, s, opts = {}) {
       const zip = new JSZip();
+      const onError = opts.onError || config.onError;
       this.createDirectory(zip, config.root).then(() => {
         zip.generateAsync({ type: 'blob' })
         .then(content => {
           const filenameFn = config.filename;
+          const done = opts.done || config.done;
           let filename = filenameFn ?
             filenameFn(editor) : `${config.filenamePfx}_${Date.now()}.zip`;
           FileSaver.saveAs(content, filename);
+          done && done();
         });
-      });
+      }).catch(onError);
     }
   });
 

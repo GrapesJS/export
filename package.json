@@ -20,6 +20,7 @@
   "author": "Artur Arseniev",
   "license": "BSD-3-Clause",
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "file-saver": "^2.0.5",
     "grapesjs": "^0.19.5",
     "grapesjs-cli": "^3.0.1",

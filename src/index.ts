@@ -2,6 +2,8 @@ import type grapesjs from 'grapesjs';
 import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 
+type Editor = grapesjs.Editor;
+
 export type PluginOptions = {
   /**
    * Type id used to register the new storage.
@@ -31,7 +33,7 @@ export type PluginOptions = {
   /**
    * Use a function to generate the filename, eg. `filename: editor => 'my-file.zip',`
    */
-   filename?: (editor: grapesjs.Editor) => string,
+   filename?: (editor: Editor) => string,
 
    /**
     * Callback to execute once the export is completed
@@ -76,14 +78,14 @@ const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
     addExportBtn: true,
     btnLabel: 'Export to ZIP',
     filenamePfx: 'grapesjs_template',
-    filename: null,
+    filename: undefined,
     done: () => {},
     onError: console.error,
     root: {
       css: {
-        'style.css': editor => editor.getCss(),
+        'style.css': (editor: Editor) => editor.getCss(),
       },
-      'index.html': editor =>
+      'index.html': (editor: Editor) =>
         `<!doctype html>
         <html lang="en">
           <head>
@@ -93,7 +95,7 @@ const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
           <body>${editor.getHtml()}</body>
         </html>`,
     },
-    isBinary: null,
+    isBinary: undefined,
     ...opts,
   };
 
@@ -104,6 +106,7 @@ const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
       const onError = opts.onError || config.onError;
       const root = opts.root || config.root;
 
+      // @ts-ignore
       this.createDirectory(zip, root)
         .then(async () => {
           const content = await zip.generateAsync({ type: 'blob' });
@@ -144,9 +147,11 @@ const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
           const typeOf = typeof content;
 
           if (typeOf === 'string') {
+            // @ts-ignore
             this.createFile(zip, name, content);
           } else if (typeOf === 'object') {
             const dirRoot = zip.folder(name);
+            // @ts-ignore
             await this.createDirectory(dirRoot, content);
           }
         }
@@ -158,11 +163,12 @@ const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
     // Add button inside export dialog
     if (config.addExportBtn) {
       const btnExp = document.createElement('button');
-      btnExp.innerHTML = config.btnLabel;
+      btnExp.innerHTML = config.btnLabel!;
       btnExp.className = `${pfx}btn-prim`;
 
       editor.on('run:export-template', () => {
-        editor.Modal.getContentEl().appendChild(btnExp);
+        const el = editor.Modal.getContentEl();
+        el?.appendChild(btnExp);
         btnExp.onclick = () => {
           editor.runCommand(commandName);
         };

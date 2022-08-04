@@ -1,13 +1,12 @@
 {
   "name": "grapesjs-plugin-export",
-  "version": "1.0.8",
+  "version": "1.0.11",
   "description": "Export GrapesJS templates to ZIP",
-  "main": "dist/grapesjs-plugin-export.min.js",
+  "main": "dist/index.js",
+  "files": ["dist/*"],
   "scripts": {
-    "lint": "eslint src",
-    "build": "npm run v:patch && webpack --env.production",
-    "v:patch": "npm version --no-git-tag-version patch",
-    "start": "webpack-dev-server --open --progress --colors"
+    "start": "grapesjs-cli serve",
+    "build": "grapesjs-cli build"
   },
   "repository": {
     "type": "git",
@@ -21,29 +20,11 @@
   ],
   "author": "Artur Arseniev",
   "license": "BSD-3-Clause",
-  "babel": {
-    "presets": [
-      "env"
-    ],
-    "plugins": [
-      "transform-object-rest-spread",
-      "transform-runtime"
-    ]
-  },
-  "dependencies": {
-    "file-saver": "^1.3.8",
-    "jszip": "^3.7.0"
-  },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "eslint": "^5.5.0",
-    "html-webpack-plugin": "^3.2.0",
-    "webpack": "^4.18.1",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.8"
+    "@types/file-saver": "^2.0.5",
+    "file-saver": "^2.0.5",
+    "grapesjs": "^0.19.5",
+    "grapesjs-cli": "^3.0.1",
+    "jszip": "^3.10.1"
   }
 }

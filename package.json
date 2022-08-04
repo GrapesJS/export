@@ -1,8 +1,9 @@
 {
   "name": "grapesjs-plugin-export",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Export GrapesJS templates to ZIP",
-  "main": "dist/grapesjs-plugin-export.min.js",
+  "main": "dist/index.js",
+  "files": ["dist/*"],
   "scripts": {
     "start": "grapesjs-cli serve",
     "build": "grapesjs-cli build"

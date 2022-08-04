@@ -1,6 +1,6 @@
 import type grapesjs from 'grapesjs';
-import JSZip from 'jszip';
 import FileSaver from 'file-saver';
+import JSZip from 'jszip';
 
 export type PluginOptions = {
   /**

@@ -5,6 +5,7 @@
     <title>GrapesJS Plugin Export</title>
     <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
     <script src="https://unpkg.com/grapesjs"></script>
+    <script src="/index.js"></script>
   </head>
   <style>
     body, html{ height: 100%; margin: 0;}
@@ -24,7 +25,7 @@
           storageManager: false,
           plugins: [
             editor => editor.on('log-plugin-export', console.log),
-            'grapesjs-plugin-export'
+            'gjs-zipup'
           ],
         });
       });

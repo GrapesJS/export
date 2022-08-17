@@ -1,5 +1,4 @@
 import type grapesjs from 'grapesjs';
-import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 
 type Editor = grapesjs.Editor;
@@ -29,6 +28,12 @@ export type PluginOptions = {
    * @default 'grapesjs_template'
    */
   filenamePfx?: string
+
+  /**
+   * upload uri
+   * @default 'grapesjs_template'
+   */
+  uploadUri?: string
 
   /**
    * Use a function to generate the filename, eg. `filename: editor => 'my-file.zip',`
@@ -72,13 +77,14 @@ export type PluginOptions = {
 
 const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
   const pfx = editor.getConfig('stylePrefix');
-  const commandName = 'gjs-export-zip';
+  const commandName = 'gjs-zipup';
 
   const config: PluginOptions = {
     addExportBtn: true,
-    btnLabel: 'Export to ZIP',
+    btnLabel: 'Zip and Upload',
     filenamePfx: 'grapesjs_template',
     filename: undefined,
+    uploadUri: 'http://localhost:3000/upload/template',
     done: () => {},
     onError: console.error,
     root: {
@@ -101,7 +107,8 @@ const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
 
   // Add command
   editor.Commands.add(commandName, {
-    run(editor, s, opts: PluginOptions = {}) {
+    // @ts-ignore
+    async run(editor, s, opts: PluginOptions = {}) {
       const zip = new JSZip();
       const onError = opts.onError || config.onError;
       const root = opts.root || config.root;
@@ -110,14 +117,43 @@ const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
       this.createDirectory(zip, root)
         .then(async () => {
           const content = await zip.generateAsync({ type: 'blob' });
+          const done = opts.done || config.done;          
           const filenameFn = opts.filename || config.filename;
-          const done = opts.done || config.done;
           const filenamePfx = opts.filenamePfx || config.filenamePfx;
           const filename = filenameFn ? filenameFn(editor) : `${filenamePfx}_${Date.now()}.zip`;
-          FileSaver.saveAs(content, filename);
+
+          if(config.uploadUri) {
+            // @ts-ignore
+            this.uploadFile(content, filename)
+          }
+          
+          // FileSaver.saveAs(content, filename);
           done?.();
         })
         .catch(onError);
+    },
+
+    async uploadFile(file: Blob, name: string) {
+      try{
+        const uri = config.uploadUri || 'http://localhost/'
+        let data = new FormData()
+        data.append('file', file, name)
+        // call api upload file to server 
+        
+        let response = await fetch(uri, {
+          method: 'POST',
+          body: data
+        });
+
+        if(response.status !== 200) {
+          throw new Error('HTTP response code != 200');
+        }
+
+        let json_response = await response.json();
+        console.log(json_response)
+      } catch(e) {
+        console.log(e)
+      }
     },
 
     createFile(zip: JSZip, name: string, content: string) {
@@ -166,10 +202,13 @@ const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
       btnExp.innerHTML = config.btnLabel!;
       btnExp.className = `${pfx}btn-prim`;
 
+      // @ts-ignore
       editor.on('run:export-template', () => {
+        // @ts-ignore
         const el = editor.Modal.getContentEl();
         el?.appendChild(btnExp);
         btnExp.onclick = () => {
+          // @ts-ignore
           editor.runCommand(commandName);
         };
       });

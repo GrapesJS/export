@@ -1,14 +1,14 @@
-# [GrapesJS Export](http://grapesjs.com)
+# [GrapesJS Upzip](http://grapesjs.com)
 
-This plugin adds the possibility to export template in a zip archive.
+This plugin adds the possibility to export and then upload template in a zip archive to a given URI.
 Demo: http://grapesjs.com/demo.html
 
 
 
 ## Summary
 
-* Plugin name: `grapesjs-plugin-export`
-* Commands: `gjs-export-zip`
+* Plugin name: `grapesjs-upzip`
+* Commands: `gjs-upzip`
 
 
 
@@ -21,6 +21,7 @@ Demo: http://grapesjs.com/demo.html
 | `btnLabel` | Label to the export button | `Export to ZIP` |
 | `filenamePfx` | ZIP filename prefix | `grapesjs_template` |
 | `filename` | Use a function to generate the filename, eg. `filename: editor => 'my-file.zip',` | `null` |
+| `uploadUri` | Which host you would upload file into? | http://localhost:3000/upload/template
 | `root` | Use the root object to create the folder structure of your zip (async functions are supported), eg. `
     {
       css: {
@@ -45,11 +46,11 @@ Demo: http://grapesjs.com/demo.html
 ## Download
 
 * CDN
-  * `https://unpkg.com/grapesjs-plugin-export`
+  * `https://unpkg.com/grapesjs-upzip`
 * NPM
-  * `npm i grapesjs-plugin-export`
+  * `npm i grapesjs-upzip`
 * GIT
-  * `git clone https://github.com/artf/grapesjs-plugin-export.git`
+  * `git clone https://github.com/artf/grapesjs-upzip.git`
 
 
 
@@ -61,7 +62,7 @@ Directly in the browser
 ```html
 <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet"/>
 <script src="https://unpkg.com/grapesjs"></script>
-<script src="path/to/grapesjs-plugin-export.min.js"></script>
+<script src="path/to/grapesjs-upzip.min.js"></script>
 
 <div id="gjs"></div>
 
@@ -69,21 +70,21 @@ Directly in the browser
   var editor = grapesjs.init({
       container : '#gjs',
       // ...
-      plugins: ['grapesjs-plugin-export'],
+      plugins: ['grapesjs-upzip'],
       pluginsOpts: {
-        'grapesjs-plugin-export': { /* options */ }
+        'grapesjs-upzip': { /* options */ }
       }
   });
 
   // You can also call the command wherever you want in this way
-  editor.runCommand('gjs-export-zip');
+  editor.runCommand('gjs-upzip');
 </script>
 ```
 
 Modern javascript
 ```js
 import grapesjs from 'grapesjs';
-import thePlugin from 'grapesjs-plugin-export';
+import thePlugin from 'grapesjs-upzip';
 
 const editor = grapesjs.init({
   container : '#gjs',
@@ -108,8 +109,8 @@ const editor = grapesjs.init({
 Clone the repository
 
 ```sh
-$ git clone https://github.com/artf/grapesjs-plugin-export.git
-$ cd grapesjs-plugin-export
+$ git clone https://github.com/artf/grapesjs-upzip.git
+$ cd grapesjs-plupzip
 ```
 
 Install it

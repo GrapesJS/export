@@ -4,14 +4,11 @@ This plugin adds the possibility to export and then upload template in a zip arc
 Demo: http://grapesjs.com/demo.html
 
 
-
 ## Summary
 
 * Plugin name: `grapesjs-upzip`
 * Commands: `gjs-upzip`
-
-
-
+* Node version: 14.16 and up (16.17 is recommended)
 
 ## Options
 

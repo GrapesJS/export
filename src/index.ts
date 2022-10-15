@@ -150,7 +150,6 @@ const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
         }
 
         let json_response = await response.json();
-        console.log(json_response)
       } catch(e) {
         console.log(e)
       }

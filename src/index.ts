@@ -134,22 +134,27 @@ const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
     },
 
     async uploadFile(file: Blob, name: string) {
+      const fetchHandler = {
+        apply(target: CallableFunction, thisArg: any, args: Array<any>) {},
+      };
+      const proxiedFetch = new Proxy(fetch, fetchHandler)
+
       try{
-        const uri = config.uploadUri || 'http://localhost/'
+        const uri = new URL(config.uploadUri!)
         let data = new FormData()
         data.append('file', file, name)
-        // call api upload file to server 
-        
-        let response = await fetch(uri, {
+        // call api upload file to server         
+        let response = await proxiedFetch( uri, {
           method: 'POST',
           body: data
-        });
+        })
 
         if(response.status !== 200) {
           throw new Error('HTTP response code != 200');
         }
 
         let json_response = await response.json();
+        editor.log(['Upload Status', { json_response }], { ns: 'plugin-upzip' });
       } catch(e) {
         console.log(e)
       }

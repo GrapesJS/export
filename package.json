@@ -3,14 +3,16 @@
   "version": "1.0.11",
   "description": "Export GrapesJS templates to ZIP",
   "main": "dist/index.js",
-  "files": ["dist/*"],
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
     "start": "grapesjs-cli serve",
     "build": "grapesjs-cli build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/artf/grapesjs-plugin-export.git"
+    "url": "https://github.com/GrapesJS/export.git"
   },
   "keywords": [
     "grapesjs",
@@ -23,8 +25,8 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
     "file-saver": "^2.0.5",
-    "grapesjs": "^0.19.5",
-    "grapesjs-cli": "^3.0.1",
+    "grapesjs": "^0.21.2",
+    "grapesjs-cli": "^4.1.1",
     "jszip": "^3.10.1"
   }
 }

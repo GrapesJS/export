@@ -15,19 +15,18 @@
       <style>.red {color: red}</style>
     </div>
     <script type="text/javascript">
-      setTimeout(() => {
-        var editor = grapesjs.init({
-          noticeOnUnload: 0,
+      window.onload = () => {
+        window.editor = grapesjs.init({
           container : '#gjs',
           height: '100%',
-          fromElement: 1,
+          fromElement: true,
+          noticeOnUnload: false,
           storageManager: false,
           plugins: [
-            editor => editor.on('log-plugin-export', console.log),
             'grapesjs-plugin-export'
           ],
         });
-      });
+      };
     </script>
   </body>
 </html>

@@ -2,6 +2,8 @@ import type { Editor, Plugin } from 'grapesjs';
 import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 
+export type RootType = Record<string, unknown>;
+
 export type PluginOptions = {
   /**
    * Add a button inside the export dialog
@@ -53,7 +55,7 @@ export type PluginOptions = {
     *   'index.html': ed => `<body>${ed.getHtml()}</body>`
     * }
     */
-   root?: Record<string, unknown>
+   root?: RootType | ((editor: Editor) => Promise<RootType>),
 
    /**
     * Custom function for checking if the file content is binary
@@ -97,7 +99,6 @@ const plugin: Plugin<PluginOptions> = (editor, opts = {}) => {
       const onError = opts.onError || config.onError;
       const root = opts.root || config.root;
 
-      // @ts-ignore
       this.createDirectory(zip, root)
         .then(async () => {
           const content = await zip.generateAsync({ type: 'blob' });
@@ -131,7 +132,6 @@ const plugin: Plugin<PluginOptions> = (editor, opts = {}) => {
     },
 
     async createDirectory(zip: JSZip, root: PluginOptions["root"]) {
-      // @ts-ignore
       root = typeof root === 'function' ? await root(editor) : root;
 
       for (const name in root) {
@@ -141,12 +141,10 @@ const plugin: Plugin<PluginOptions> = (editor, opts = {}) => {
           const typeOf = typeof content;
 
           if (typeOf === 'string') {
-            // @ts-ignore
-            this.createFile(zip, name, content);
+            this.createFile(zip, name, content as string);
           } else if (typeOf === 'object') {
-            const dirRoot = zip.folder(name);
-            // @ts-ignore
-            await this.createDirectory(dirRoot, content);
+            const dirRoot = zip.folder(name)!;
+            await this.createDirectory(dirRoot, content as RootType);
           }
         }
       }

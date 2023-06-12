@@ -1,17 +1,8 @@
-import type grapesjs from 'grapesjs';
+import type { Editor, Plugin } from 'grapesjs';
 import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 
-type Editor = grapesjs.Editor;
-
 export type PluginOptions = {
-  /**
-   * Type id used to register the new storage.
-   * You can use this option in case you want to replace the already available storages (eg. `local`).
-   * @default 'indexeddb'
-   */
-  type?: string,
-
   /**
    * Add a button inside the export dialog
    * @default true
@@ -70,7 +61,7 @@ export type PluginOptions = {
    isBinary?: (content: string, name: string) => boolean,
 };
 
-const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
+const plugin: Plugin<PluginOptions> = (editor, opts = {}) => {
   const pfx = editor.getConfig('stylePrefix');
   const commandName = 'gjs-export-zip';
 
@@ -132,7 +123,10 @@ const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
         opts.binary = true;
       }
 
-      editor.log(['Create file', { name, content, opts }], { ns: 'plugin-export' });
+      editor.log('Create file', { ns: 'plugin-export',
+        // @ts-ignore
+        name, content, opts
+      });
       zip.file(name, content, opts);
     },
 

@@ -1,5 +1,5 @@
-import type { Editor, Plugin } from 'grapesjs';
 import FileSaver from 'file-saver';
+import type { Editor, Plugin } from 'grapesjs';
 import JSZip from 'jszip';
 
 export type RootType = Record<string, unknown>;

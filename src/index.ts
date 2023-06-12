@@ -159,13 +159,12 @@ const plugin: Plugin<PluginOptions> = (editor, opts = {}) => {
       const btnExp = document.createElement('button');
       btnExp.innerHTML = config.btnLabel!;
       btnExp.className = `${pfx}btn-prim`;
+      btnExp.type = 'button';
 
       editor.on('run:export-template', () => {
         const el = editor.Modal.getContentEl();
         el?.appendChild(btnExp);
-        btnExp.onclick = () => {
-          editor.runCommand(commandName);
-        };
+        btnExp.onclick = () => editor.runCommand(commandName);
       });
     }
   })

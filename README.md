@@ -49,7 +49,7 @@ Demo: http://grapesjs.com/demo.html
 * NPM
   * `npm i grapesjs-plugin-export`
 * GIT
-  * `git clone https://github.com/artf/grapesjs-plugin-export.git`
+  * `git clone https://github.com/GrapesJS/export.git`
 
 
 
@@ -108,7 +108,7 @@ const editor = grapesjs.init({
 Clone the repository
 
 ```sh
-$ git clone https://github.com/artf/grapesjs-plugin-export.git
+$ git clone https://github.com/GrapesJS/export.git.git
 $ cd grapesjs-plugin-export
 ```
 

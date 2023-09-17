@@ -108,7 +108,7 @@ const editor = grapesjs.init({
 Clone the repository
 
 ```sh
-$ git clone https://github.com/GrapesJS/export.git.git
+$ git clone https://github.com/GrapesJS/export.git
 $ cd grapesjs-plugin-export
 ```
 
